@@ -1,3 +1,4 @@
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/70-navigation.js','rb-build:9feddda7dde137fd13bb91a1d97ae6509e3f167866f180f41c0c2f8b17e73c87')}catch(error){throw error}
 /* v0.27 dashboard/navigation prototype. Reads the existing roster/pay state and
    routes into existing tools; it does not replace the calculation engines. */
 (()=>{

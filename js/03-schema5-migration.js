@@ -1,3 +1,4 @@
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/03-schema5-migration.js','rb-build:9feddda7dde137fd13bb91a1d97ae6509e3f167866f180f41c0c2f8b17e73c87')}catch(error){throw error}
 try{if(typeof window!=='undefined'&&window.RosterBotBootDiagnostics)window.RosterBotBootDiagnostics.start('03-schema5-migration','RosterBotSchema5Migration',document.currentScript?.src||'js/03-schema5-migration.js')}catch(_){}
 (function(root,factory){
   'use strict';
@@ -19,7 +20,7 @@ try{if(typeof window!=='undefined'&&window.RosterBotBootDiagnostics)window.Roste
   });
   const JOURNAL_FORMAT='rosterbot-schema5-migration-journal';
   const JOURNAL_VERSION=1;
-  const WRITER=Object.freeze({app:'RosterBotPayBot',version:'0.30.0',build:'20261006-phase9-local-schema5'});
+  const WRITER=Object.freeze({app:'RosterBotPayBot',version:'0.30.0',build:'v0.30.0-release'});
   const CHECKPOINT=Object.freeze(Object.fromEntries(schema5.JOURNAL_STATES.map((state,index)=>[state,index])));
   const appOwned=key=>/^(?:rosterbot|paybot)-/.test(String(key||''));
   const isObject=value=>!!value&&typeof value==='object'&&!Array.isArray(value);

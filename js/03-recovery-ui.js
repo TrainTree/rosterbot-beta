@@ -1,3 +1,4 @@
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/03-recovery-ui.js','rb-build:9feddda7dde137fd13bb91a1d97ae6509e3f167866f180f41c0c2f8b17e73c87')}catch(error){throw error}
 try{if(typeof window!=='undefined'&&window.RosterBotBootDiagnostics)window.RosterBotBootDiagnostics.start('03-recovery-ui','RosterBotRecoveryUI',document.currentScript?.src||'js/03-recovery-ui.js')}catch(_){}
 (function(root,factory){
   'use strict';
@@ -6,7 +7,7 @@ try{if(typeof window!=='undefined'&&window.RosterBotBootDiagnostics)window.Roste
   if(root)root.RosterBotRecoveryUI=api;
 })(typeof window!=='undefined'?window:globalThis,function(){
   'use strict';
-  const BUILD_VERSION='v0.30-phase7b';
+  const BUILD_VERSION='v0.30.0';
   const RECOVERABLE=new Set(['valid','legacy']);
   const SECRET_SENSITIVITY=new Set(['secret','cryptographic']);
   const LABELS={

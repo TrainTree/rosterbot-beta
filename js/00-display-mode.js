@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/00-display-mode.js','rb-build:711f8d539192cb498dbafb997acf0e250906b55393c9b9956c77e47730055392')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/00-display-mode.js','rb-build:dcede09422fed1a95ff4603f1ae290c4246e5f695ce32b47f5bd4484154d39ed')}catch(error){throw error}
 (function(root,factory){
   const api=factory(root);
   if(typeof module==='object'&&module.exports)module.exports=api;
@@ -7,6 +7,7 @@ try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__roste
   'use strict';
   const listeners=new Set();
   const viewportListeners=new Set();
+  const dialogViewportProperties=Object.freeze(['--rb-dialog-visual-height','--rb-dialog-visual-width','--rb-dialog-visual-top','--rb-dialog-visual-left','--rb-dialog-visual-right','--rb-dialog-center-shift']);
   let mediaQuery=null,current=null,viewportCurrent=null,viewportFrame=0;
 
   function detect(environment=root){
@@ -37,23 +38,64 @@ try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__roste
     listeners.add(listener);return()=>listeners.delete(listener);
   }
 
+  function positiveDimension(value){const number=Number(value);return Number.isFinite(number)&&number>0?number:null}
+  function finiteOffset(value){const number=Number(value);return Number.isFinite(number)?number:0}
+
   function measureViewport(environment=root){
+    const layoutHeight=positiveDimension(environment?.innerHeight);
+    const layoutWidth=positiveDimension(environment?.innerWidth);
     const viewport=environment?.visualViewport;
-    const height=Number(viewport?.height);
-    if(viewport&&Number.isFinite(height)&&height>0)return Object.freeze({height,source:'visual-viewport'});
-    const fallback=Number(environment?.innerHeight);
-    return Object.freeze({height:Number.isFinite(fallback)&&fallback>0?fallback:null,source:'layout-viewport'});
+    if(!viewport)return Object.freeze({height:layoutHeight,width:layoutWidth,offsetTop:0,offsetLeft:0,offsetRight:0,centerShift:0,layoutHeight,layoutWidth,constrained:false,valid:Boolean(layoutHeight&&layoutWidth),source:'layout-viewport'});
+    const height=positiveDimension(viewport.height);
+    const width=positiveDimension(viewport.width);
+    const offsetTop=finiteOffset(viewport.offsetTop);
+    const offsetLeft=finiteOffset(viewport.offsetLeft);
+    const tolerance=2;
+    const horizontallyContained=!layoutWidth||(offsetLeft>=-tolerance&&offsetLeft+(width||0)<=layoutWidth+tolerance);
+    const verticallyContained=!layoutHeight||(offsetTop>=-tolerance&&offsetTop+(height||0)<=layoutHeight+tolerance);
+    const valid=Boolean(height&&width&&layoutHeight&&layoutWidth&&horizontallyContained&&verticallyContained);
+    const offsetRight=valid?Math.max(0,layoutWidth-offsetLeft-width):0;
+    const centerShift=valid?offsetLeft+(width/2)-(layoutWidth/2):0;
+    const constrained=valid&&(height<layoutHeight-1||width<layoutWidth-1||Math.abs(offsetTop)>1||Math.abs(offsetLeft)>1);
+    return Object.freeze({height,width,offsetTop,offsetLeft,offsetRight,centerShift,layoutHeight,layoutWidth,constrained,valid,source:'visual-viewport'});
+  }
+
+  function clearDialogViewport(documentObject){
+    if(typeof documentObject?.querySelectorAll!=='function')return;
+    for(const modal of documentObject.querySelectorAll('.feedback-modal')){
+      if(modal?.dataset)delete modal.dataset.rosterbotVisualConstrained;
+      const dialog=modal?.querySelector?.('.feedback-dialog');
+      if(!dialog?.style)continue;
+      for(const property of dialogViewportProperties)dialog.style.removeProperty(property);
+    }
+  }
+
+  function applyDialogViewport(documentObject,viewport){
+    clearDialogViewport(documentObject);
+    if(!viewport?.valid||!viewport.constrained)return;
+    for(const modal of documentObject.querySelectorAll('.feedback-modal:not([hidden])')){
+      const dialog=modal.querySelector?.('.feedback-dialog');
+      if(!dialog?.style)continue;
+      modal.dataset.rosterbotVisualConstrained='true';
+      dialog.style.setProperty('--rb-dialog-visual-height',`${viewport.height}px`);
+      dialog.style.setProperty('--rb-dialog-visual-width',`${viewport.width}px`);
+      dialog.style.setProperty('--rb-dialog-visual-top',`${viewport.offsetTop}px`);
+      dialog.style.setProperty('--rb-dialog-visual-left',`${viewport.offsetLeft}px`);
+      dialog.style.setProperty('--rb-dialog-visual-right',`${viewport.offsetRight}px`);
+      dialog.style.setProperty('--rb-dialog-center-shift',`${viewport.centerShift}px`);
+    }
   }
 
   function publishViewport(next){
-    const changed=!viewportCurrent||viewportCurrent.height!==next.height||viewportCurrent.source!==next.source;
+    const keys=['height','width','offsetTop','offsetLeft','offsetRight','centerShift','layoutHeight','layoutWidth','constrained','valid','source'];
+    const changed=!viewportCurrent||keys.some(key=>viewportCurrent[key]!==next[key]);
     viewportCurrent=next;
     try{
       const documentElement=root?.document?.documentElement;
       if(documentElement){
         documentElement.dataset.rosterbotViewportSource=next.source;
-        if(next.source==='visual-viewport'&&next.height!==null)documentElement.style.setProperty('--rb-visual-viewport-height',`${next.height}px`);
-        else documentElement.style.removeProperty('--rb-visual-viewport-height');
+        documentElement.dataset.rosterbotViewportValid=next.valid?'true':'false';
+        applyDialogViewport(root.document,next);
       }
     }catch(_){}
     if(changed)for(const listener of [...viewportListeners]){try{listener(viewportCurrent)}catch(error){setTimeout(()=>{throw error},0)}}
@@ -81,11 +123,14 @@ try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__roste
     refresh();
     try{
       root.visualViewport?.addEventListener?.('resize',scheduleViewportRefresh,{passive:true});
+      root.visualViewport?.addEventListener?.('scroll',scheduleViewportRefresh,{passive:true});
       root.addEventListener?.('orientationchange',scheduleViewportRefresh,{passive:true});
       root.addEventListener?.('pageshow',scheduleViewportRefresh,{passive:true});
+      root.document?.addEventListener?.('focusin',scheduleViewportRefresh,{passive:true});
+      root.document?.addEventListener?.('focusout',scheduleViewportRefresh,{passive:true});
     }catch(_){}
     refreshViewport();
   }
 
-  return Object.freeze({detect,getState,refresh,subscribe,measureViewport,getViewportState,refreshViewport,subscribeViewport});
+  return Object.freeze({detect,getState,refresh,subscribe,measureViewport,applyDialogViewport,getViewportState,refreshViewport,subscribeViewport});
 });

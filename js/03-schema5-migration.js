@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/03-schema5-migration.js','rb-build:9feddda7dde137fd13bb91a1d97ae6509e3f167866f180f41c0c2f8b17e73c87')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/03-schema5-migration.js','rb-build:711f8d539192cb498dbafb997acf0e250906b55393c9b9956c77e47730055392')}catch(error){throw error}
 try{if(typeof window!=='undefined'&&window.RosterBotBootDiagnostics)window.RosterBotBootDiagnostics.start('03-schema5-migration','RosterBotSchema5Migration',document.currentScript?.src||'js/03-schema5-migration.js')}catch(_){}
 (function(root,factory){
   'use strict';

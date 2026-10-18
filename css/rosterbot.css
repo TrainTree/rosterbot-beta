@@ -2428,3 +2428,105 @@ body.feedback-modal-open{overscroll-behavior:none}
   .feedback-modal{padding-top:max(6px,var(--rb-safe-top));padding-bottom:max(6px,var(--rb-safe-bottom))}
   .feedback-dialog{max-height:calc(100dvh - max(12px,var(--rb-safe-top)) - max(12px,var(--rb-safe-bottom)))}
 }
+
+/* Phase 6 build B — real WebKit rotation/keyboard corrections.
+   A fixed 100% policy prevents WebKit's transient narrow-layout text boost
+   while retaining browser zoom and the user's configured text size. */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+
+/* The fixed overlay, not its child dialog, owns safe-area space. `inset` plus
+   a width derived from 100vw previously allowed wide specialised dialogs to
+   add their width to the overlay padding in landscape. The visual-viewport
+   variable is runtime presentation state and falls back to dynamic viewport
+   units when VisualViewport is unavailable. */
+.feedback-modal{
+  inset:0 0 auto;
+  box-sizing:border-box;
+  grid-template-columns:minmax(0,1fr);
+  width:auto;
+  min-width:0;
+  height:var(--rb-visual-viewport-height,100dvh);
+  min-height:0;
+  max-height:var(--rb-visual-viewport-height,100dvh);
+}
+.feedback-dialog{
+  box-sizing:border-box;
+  min-width:0;
+  max-width:100%;
+  max-height:calc(var(--rb-visual-viewport-height,100dvh) - max(20px,var(--rb-safe-top)) - max(20px,var(--rb-safe-bottom)));
+}
+
+/* The editor has exactly one scrolling body. Header and actions remain in the
+   reduced visual viewport while its fields scroll independently beneath them. */
+#dayEditorModal .day-editor-dialog{
+  display:flex;
+  flex-direction:column;
+  width:min(650px,100%);
+  max-width:100%!important;
+  height:calc(var(--rb-visual-viewport-height,100dvh) - var(--rb-safe-top) - var(--rb-safe-bottom));
+  max-height:calc(var(--rb-visual-viewport-height,100dvh) - var(--rb-safe-top) - var(--rb-safe-bottom));
+  overflow:hidden!important;
+}
+#dayEditorModal .feedback-dialog-header{flex:0 0 auto}
+#dayEditorModal .day-editor-scroll{
+  flex:1 1 auto;
+  min-height:0;
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scroll-padding-top:12px;
+  scroll-padding-bottom:24px;
+  -webkit-overflow-scrolling:touch;
+}
+#dayEditorModal .day-editor-scroll>.form-grid{grid-template-columns:minmax(165px,.72fr) minmax(300px,1.45fr)}
+#dayEditorModal .day-editor-dialog>.actions{
+  position:relative!important;
+  flex:0 0 auto;
+  bottom:auto!important;
+  margin:0;
+  padding:12px 20px calc(12px + var(--rb-safe-bottom));
+}
+
+/* A day column is the sizing container for its full time range. At a narrow
+   seven-day column the two times become two compact, readable lines instead
+   of contributing an unbreakable width to neighbouring days. */
+.day-column{container-type:inline-size}
+.cell-time-range{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:baseline;
+  gap:0 .24em;
+  min-width:0;
+  max-width:100%;
+  white-space:normal;
+}
+.cell-time-range :is(.time-start,.time-sep,.time-finish){min-width:0;white-space:nowrap}
+@container (max-width:120px){
+  .cell-time-range{display:grid;grid-template-columns:1fr;gap:0;font-size:clamp(.62rem,12cqi,.82rem);line-height:1.12}
+  .cell-time-range .time-sep{display:none}
+  .cell-time-range .time-finish::before{content:"↳";margin-right:1px;opacity:.72}
+}
+
+@media(max-width:760px){
+  #dayEditorModal .day-editor-dialog{
+    width:100%!important;
+    height:calc(var(--rb-visual-viewport-height,100dvh) - var(--rb-safe-top) - var(--rb-safe-bottom))!important;
+    max-height:calc(var(--rb-visual-viewport-height,100dvh) - var(--rb-safe-top) - var(--rb-safe-bottom))!important;
+  }
+  #dayEditorModal .day-editor-scroll>.form-grid{grid-template-columns:1fr}
+}
+
+@media(max-width:560px){
+  #dayEditorModal .day-editor-dialog>.actions{
+    display:grid;
+    grid-template-columns:1fr;
+    margin:0 -18px;
+    padding-right:18px;
+    padding-left:18px;
+  }
+}
+
+@media(orientation:landscape) and (max-height:560px){
+  .feedback-dialog{max-height:calc(var(--rb-visual-viewport-height,100dvh) - max(12px,var(--rb-safe-top)) - max(12px,var(--rb-safe-bottom)))}
+}

@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/00-display-mode.js','rb-build:9feddda7dde137fd13bb91a1d97ae6509e3f167866f180f41c0c2f8b17e73c87')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/00-display-mode.js','rb-build:711f8d539192cb498dbafb997acf0e250906b55393c9b9956c77e47730055392')}catch(error){throw error}
 (function(root,factory){
   const api=factory(root);
   if(typeof module==='object'&&module.exports)module.exports=api;
@@ -6,7 +6,8 @@ try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__roste
 })(typeof window!=='undefined'?window:null,function(root){
   'use strict';
   const listeners=new Set();
-  let mediaQuery=null,current=null;
+  const viewportListeners=new Set();
+  let mediaQuery=null,current=null,viewportCurrent=null,viewportFrame=0;
 
   function detect(environment=root){
     const navigatorObject=environment?.navigator||{};
@@ -36,6 +37,41 @@ try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__roste
     listeners.add(listener);return()=>listeners.delete(listener);
   }
 
+  function measureViewport(environment=root){
+    const viewport=environment?.visualViewport;
+    const height=Number(viewport?.height);
+    if(viewport&&Number.isFinite(height)&&height>0)return Object.freeze({height,source:'visual-viewport'});
+    const fallback=Number(environment?.innerHeight);
+    return Object.freeze({height:Number.isFinite(fallback)&&fallback>0?fallback:null,source:'layout-viewport'});
+  }
+
+  function publishViewport(next){
+    const changed=!viewportCurrent||viewportCurrent.height!==next.height||viewportCurrent.source!==next.source;
+    viewportCurrent=next;
+    try{
+      const documentElement=root?.document?.documentElement;
+      if(documentElement){
+        documentElement.dataset.rosterbotViewportSource=next.source;
+        if(next.source==='visual-viewport'&&next.height!==null)documentElement.style.setProperty('--rb-visual-viewport-height',`${next.height}px`);
+        else documentElement.style.removeProperty('--rb-visual-viewport-height');
+      }
+    }catch(_){}
+    if(changed)for(const listener of [...viewportListeners]){try{listener(viewportCurrent)}catch(error){setTimeout(()=>{throw error},0)}}
+    return viewportCurrent;
+  }
+
+  function refreshViewport(){viewportFrame=0;return publishViewport(measureViewport(root))}
+  function scheduleViewportRefresh(){
+    if(viewportFrame)return;
+    const schedule=typeof root?.requestAnimationFrame==='function'?root.requestAnimationFrame.bind(root):(callback)=>setTimeout(callback,0);
+    viewportFrame=schedule(refreshViewport);
+  }
+  function getViewportState(){return viewportCurrent||refreshViewport()}
+  function subscribeViewport(listener){
+    if(typeof listener!=='function')throw new TypeError('RosterBot viewport listener must be a function.');
+    viewportListeners.add(listener);return()=>viewportListeners.delete(listener);
+  }
+
   if(root){
     try{
       mediaQuery=typeof root.matchMedia==='function'?root.matchMedia('(display-mode: standalone)'):null;
@@ -43,7 +79,13 @@ try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__roste
       else if(typeof mediaQuery?.addListener==='function')mediaQuery.addListener(refresh);
     }catch(_){}
     refresh();
+    try{
+      root.visualViewport?.addEventListener?.('resize',scheduleViewportRefresh,{passive:true});
+      root.addEventListener?.('orientationchange',scheduleViewportRefresh,{passive:true});
+      root.addEventListener?.('pageshow',scheduleViewportRefresh,{passive:true});
+    }catch(_){}
+    refreshViewport();
   }
 
-  return Object.freeze({detect,getState,refresh,subscribe});
+  return Object.freeze({detect,getState,refresh,subscribe,measureViewport,getViewportState,refreshViewport,subscribeViewport});
 });

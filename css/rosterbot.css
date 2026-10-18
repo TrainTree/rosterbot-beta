@@ -1878,10 +1878,12 @@ html.v27-view-calendar #rosterOutput,html.v27-view-calendar .output-tools{displa
 html.v27-view-calendar .output-heading{margin-bottom:15px}.output-section{scroll-margin-top:12px}
 .v27-calendar-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:-2px 0 16px}.v27-calendar-feature{position:relative;display:flex;align-items:flex-start;gap:11px;padding:13px;border:1px solid var(--border);border-radius:14px;background:var(--surface-2)}.v27-calendar-feature-icon{display:grid;place-items:center;flex:0 0 auto;width:30px;height:30px;color:var(--accent)}.v27-calendar-feature-icon .v27-svg{width:26px;height:26px}.v27-calendar-feature strong,.v27-calendar-feature small{display:block}.v27-calendar-feature small{margin-top:3px;color:var(--muted);line-height:1.35}.v27-calendar-feature.planned{opacity:.78}.v27-planned-pill{position:absolute;right:10px;top:10px;padding:3px 6px;border-radius:999px;background:color-mix(in srgb,var(--accent) 14%,transparent);font-size:.58rem;font-weight:850;letter-spacing:.08em}
 
-/* Day editor: keep the three footer actions reachable on small iOS viewports. */
+/* Day editor record actions are ordinary scrollable content. Save & close and
+   Close remain in the stable header, so the keyboard never reserves most of
+   the usable viewport for secondary record-management controls. */
 #dayEditorModal .day-editor-dialog{overscroll-behavior:contain;padding-bottom:0}
-#dayEditorModal .day-editor-dialog>.actions{position:sticky;z-index:8;bottom:0;display:flex;flex-wrap:wrap;gap:8px;margin:18px -20px 0;padding:12px 20px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--border);background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-#dayEditorModal .day-editor-dialog>.actions button{width:auto;flex:1 1 160px;min-width:0}
+#dayEditorModal .day-editor-scroll>.actions{position:static;display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:12px 0 calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--border);background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none}
+#dayEditorModal .day-editor-scroll>.actions button{width:auto;flex:1 1 160px;min-width:0}
 
 
 /* v0.27.6 polish */
@@ -1895,7 +1897,7 @@ html[data-theme="3"] .history-cycle-dot.pay{border-color:#e9b949!important}html[
 #dayEditorModal{overflow:hidden!important;overscroll-behavior:none;touch-action:pan-y}
 #dayEditorModal .day-editor-dialog{box-sizing:border-box!important;max-width:100vw!important;overflow-x:hidden!important;overscroll-behavior-x:none!important;touch-action:pan-y}
 #dayEditorModal .feedback-dialog-header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--surface) 96%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
-@media(max-width:620px){#dayEditorModal .day-editor-dialog{width:100vw!important;max-width:100vw!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;margin:0!important;padding-left:18px;padding-right:18px}#dayEditorModal .day-editor-dialog>.actions{position:sticky!important;bottom:0!important;z-index:30!important;margin-bottom:0!important;padding-bottom:calc(16px + env(safe-area-inset-bottom))!important;background:var(--surface)!important}}
+@media(max-width:620px){#dayEditorModal .day-editor-dialog{width:100vw!important;max-width:100vw!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;margin:0!important;padding-left:18px;padding-right:18px}}
 /* Year strip is a horizontal gesture surface; JS changes year on a deliberate swipe. */
 .v27-history-strip{touch-action:pan-y;user-select:none;-webkit-user-select:none}
 
@@ -1906,7 +1908,7 @@ html[data-theme="3"] .history-cycle-dot.pay{border-color:#e9b949!important}html[
   .v27-header-shell,.v27-dashboard{max-width:none}.v27-header-actions{gap:6px}.v27-card-page{gap:9px}.v27-dash-card{min-height:164px;padding:14px;border-radius:20px}.v27-tool-card{min-height:174px}.v27-wide-card{min-height:142px}.v27-card-icon{width:25px;height:25px}.v27-card-icon .v27-svg{width:23px;height:23px}.v27-card-watermark{right:6px;bottom:5px;width:60px;height:60px}.v27-card-watermark .v27-svg{width:50px;height:50px}.v27-card-cta{font-size:.66rem}.v27-calendar-feature-grid{grid-template-columns:1fr}.v27-viewer-grid{grid-template-columns:1fr 1fr}.v27-viewer-grid .field:first-child{grid-column:1/-1}.v27-viewer-dialog{width:100vw;max-width:none;max-height:94dvh}.v27-master-table-wrap{max-height:50dvh}
 }
 @media(max-width:560px){
-  #dayEditorModal .day-editor-dialog>.actions{display:grid;grid-template-columns:1fr;margin-left:-18px;margin-right:-18px;padding-left:18px;padding-right:18px}#dayEditorModal .day-editor-dialog>.actions button{width:100%;flex:none}
+  #dayEditorModal .day-editor-scroll>.actions{display:grid;grid-template-columns:1fr}#dayEditorModal .day-editor-scroll>.actions button{width:100%;flex:none}
 }
 @media(max-width:430px){
   .v27-header-shell{padding-top:15px}.v27-brand-title{font-size:1.95rem}.v27-icon-btn{width:40px;height:40px;min-height:40px}.v27-header-chip{min-height:43px;padding:6px 8px}.v27-chip-icon{width:21px;height:21px}.v27-chip-icon .v27-svg{width:19px;height:19px}.v27-card-page{gap:8px}.v27-dash-card{min-height:157px;padding:13px}.v27-dash-card>strong{font-size:.98rem}.v27-card-line{font-size:.7rem}.v27-card-pay{font-size:.84rem}.v27-status-line{font-size:.61rem}.v27-card-kicker{font-size:.75rem}.v27-card-label{gap:6px}.v27-card-icon{width:22px;height:22px}.v27-card-icon .v27-svg{width:21px;height:21px}.v27-card-chevron .v27-svg{width:18px;height:18px}.v27-week-day i{width:14px;height:14px}.v27-week-day b{font-size:.55rem}.v27-card-watermark{opacity:.09}.v27-dashboard-tip{min-height:44px;font-size:.72rem}.v27-viewer-grid{grid-template-columns:1fr}.v27-viewer-grid .field:first-child{grid-column:auto}.v27-master-duty{min-width:112px;min-height:54px}.v27-master-table{width:880px}
@@ -2378,7 +2380,6 @@ body.feedback-modal-open{overscroll-behavior:none}
   max-height:calc(100dvh - var(--rb-safe-top) - var(--rb-safe-bottom));
   max-width:calc(100vw - var(--rb-safe-left) - var(--rb-safe-right));
 }
-#dayEditorModal .day-editor-dialog>.actions{bottom:0}
 
 /* Fixed mobile navigation owns the Home-indicator inset. Side padding keeps
    the first and last actions clear of landscape sensor housing. */
@@ -2463,8 +2464,8 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   max-height:calc(var(--rb-dialog-visual-height,100dvh) - max(20px,var(--rb-safe-top)) - max(20px,var(--rb-safe-bottom)))!important;
 }
 
-/* The editor has exactly one scrolling body. Header and actions remain in the
-   reduced visual viewport while its fields scroll independently beneath them. */
+/* The editor has exactly one scrolling body. Only the compact header remains
+   fixed; fields, pay controls and record-management actions share the body. */
 #dayEditorModal .day-editor-dialog{
   display:flex;
   flex-direction:column;
@@ -2476,6 +2477,8 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 }
 #dayEditorModal[data-rosterbot-visual-constrained="true"] .day-editor-dialog{
   left:0;
+  height:calc(var(--rb-dialog-visual-height,100dvh) - var(--rb-safe-top) - var(--rb-safe-bottom));
+  max-height:calc(var(--rb-dialog-visual-height,100dvh) - var(--rb-safe-top) - var(--rb-safe-bottom))!important;
   margin-right:var(--rb-dialog-visual-right,0px)!important;
 }
 #dayEditorModal .feedback-dialog-header{flex:0 0 auto}
@@ -2490,13 +2493,6 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   -webkit-overflow-scrolling:touch;
 }
 #dayEditorModal .day-editor-scroll>.form-grid{grid-template-columns:minmax(165px,.72fr) minmax(300px,1.45fr)}
-#dayEditorModal .day-editor-dialog>.actions{
-  position:relative!important;
-  flex:0 0 auto;
-  bottom:auto!important;
-  margin:0;
-  padding:12px 20px calc(12px + var(--rb-safe-bottom));
-}
 
 /* A day column is the sizing container for its full time range. At a narrow
    seven-day column the two times become two compact, readable lines instead
@@ -2535,16 +2531,11 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
   #dayEditorModal .day-editor-scroll>.form-grid{grid-template-columns:1fr}
 }
 
-@media(max-width:560px){
-  #dayEditorModal .day-editor-dialog>.actions{
-    display:grid;
-    grid-template-columns:1fr;
-    margin:0 -18px;
-    padding-right:18px;
-    padding-left:18px;
-  }
-}
-
 @media(orientation:landscape) and (max-height:560px){
   .feedback-dialog{max-height:calc(var(--rb-dialog-visual-height,100dvh) - max(12px,var(--rb-safe-top)) - max(12px,var(--rb-safe-bottom)))}
+  #dayEditorModal[data-rosterbot-visual-constrained="true"] .feedback-dialog-header{align-items:center;gap:8px;padding:7px 10px}
+  #dayEditorModal[data-rosterbot-visual-constrained="true"] .feedback-dialog-header .eyebrow{margin-bottom:2px;font-size:.6rem}
+  #dayEditorModal[data-rosterbot-visual-constrained="true"] .feedback-dialog-header h2{font-size:1.05rem}
+  #dayEditorModal[data-rosterbot-visual-constrained="true"] .day-editor-header-actions{gap:6px}
+  #dayEditorModal[data-rosterbot-visual-constrained="true"] .day-save-close{padding-right:10px;padding-left:10px}
 }

@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/02-canonical-state.js','rb-build:927293a82f606e5384592442a9746480cc78b075b8cbb01c8f3523c296602d3c')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/02-canonical-state.js','rb-build:7c8892b2c07acc63cd4808af98a7080896fd03701127c87690e6f3a5de826d5a')}catch(error){throw error}
 try{if(typeof window!=='undefined'&&window.RosterBotBootDiagnostics)window.RosterBotBootDiagnostics.start('02-canonical-state','RosterBotCanonicalPersistence',document.currentScript?.src||'js/02-canonical-state.js')}catch(_){}
 (function(root,factory){
   'use strict';
@@ -15,7 +15,7 @@ try{if(typeof window!=='undefined'&&window.RosterBotBootDiagnostics)window.Roste
   const PREVIOUS_FORMAT='rosterbot-previous-generation-v1';
   const GENERATION_KEY='rosterbot-local-generation-v1';
   const PREVIOUS_KEY='rosterbot-previous-generation-v1';
-  const WRITER_VERSION='v0.30.0';
+  const WRITER_VERSION='v0.31.0';
   const RECOVERABLE=new Set(['valid','legacy']);
   const own=(value,key)=>Object.prototype.hasOwnProperty.call(value,key);
   const isObject=value=>!!value&&typeof value==='object'&&!Array.isArray(value);

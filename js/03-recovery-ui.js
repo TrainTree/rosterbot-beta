@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/03-recovery-ui.js','rb-build:7c8892b2c07acc63cd4808af98a7080896fd03701127c87690e6f3a5de826d5a')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/03-recovery-ui.js','rb-build:8578d00808dd5d3143d9a88c339b37341af3f262d56e682fa4318e0b8e4183d3')}catch(error){throw error}
 try{if(typeof window!=='undefined'&&window.RosterBotBootDiagnostics)window.RosterBotBootDiagnostics.start('03-recovery-ui','RosterBotRecoveryUI',document.currentScript?.src||'js/03-recovery-ui.js')}catch(_){}
 (function(root,factory){
   'use strict';

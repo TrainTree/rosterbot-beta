@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/32-dialog-controller.js','rb-build:0ee67dbe7da8439795f0de1dc3380846958fd10d3cf9c283528654c82bb0ff9a')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/32-dialog-controller.js','rb-build:3fd5bd47ea16b791c2e8119446b9c50f8e6c9773fadf054cbaf254373eb1dd30')}catch(error){throw error}
 (function(root){
   'use strict';
   const documentObject=root.document;if(!documentObject)return;

@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/00-error-handler.js','rb-build:3fd5bd47ea16b791c2e8119446b9c50f8e6c9773fadf054cbaf254373eb1dd30')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/00-error-handler.js','rb-build:1a884ba53a54ef15fe3acb6ccfa728a0ea760a1f275ce00c3d4d0dedcf74d532')}catch(error){throw error}
 // Capture exact raw values before any feature module can create defaults. The
 // recovery preflight compares this immutable view with IndexedDB.
 if(window.__rosterbotCanonicalOriginDecision?.action==='continue')try {

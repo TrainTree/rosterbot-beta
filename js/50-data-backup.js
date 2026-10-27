@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/50-data-backup.js','rb-build:3fd5bd47ea16b791c2e8119446b9c50f8e6c9773fadf054cbaf254373eb1dd30')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/50-data-backup.js','rb-build:1a884ba53a54ef15fe3acb6ccfa728a0ea760a1f275ce00c3d4d0dedcf74d532')}catch(error){throw error}
 (function(){
   'use strict';
   const modal=document.getElementById('dataModal'),openBtn=document.getElementById('dataOpenBtn'),noticeBtn=document.getElementById('openDataFromNotice'),closeBtn=document.getElementById('dataCloseBtn'),persistBtn=document.getElementById('persistDataBtn'),storageHealth=document.getElementById('storageHealth'),exportBtn=document.getElementById('exportDataBtn'),importBtn=document.getElementById('importDataBtn'),fileInput=document.getElementById('importDataFile'),clearBtn=document.getElementById('clearDataBtn'),status=document.getElementById('dataStatus'),backupAge=document.getElementById('backupAge'),privacyPill=document.querySelector('.privacy-pill');

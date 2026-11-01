@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/08-connectivity-state.js','rb-build:7bcdefd08fdf697c854ac641c6e5763688b0f6b1af1973333245d9038dc3e425')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/08-connectivity-state.js','rb-build:6fc56ff29623f571ef775e5961709520d63197469c717c1eb1e9723fca114b22')}catch(error){throw error}
 (function(root,factory){
   const api=factory();
   if(typeof module==='object'&&module.exports)module.exports=api;

@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/05-cloud-deployment-profile.js','rb-build:7bcdefd08fdf697c854ac641c6e5763688b0f6b1af1973333245d9038dc3e425')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/05-cloud-deployment-profile.js','rb-build:6fc56ff29623f571ef775e5961709520d63197469c717c1eb1e9723fca114b22')}catch(error){throw error}
 (function(root){
   'use strict';
   const profile=Object.freeze({"version":1,"deployment":"beta-staging","environment":"isolated-staging","projectRef":"wuzyurvrztskljpxpeaq","url":"https://wuzyurvrztskljpxpeaq.supabase.co","publishableKey":"sb_publishable_TP9vU3hB8sP8A9N2sF8Dtg_2xvKkseU","allowedOrigins":["https://beta.rosterbot.work"],"allowSavedConfiguration":false,"fallbackToEmbedded":false,"requestedCloudSchema":5});

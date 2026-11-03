@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/41-pay-rate-official.js','rb-build:91ede10de3424ec64d5b469a84a6e0668067a016a0b7838482072898cbad34a1')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/41-pay-rate-official.js','rb-build:d27ce2606ee98eed7a78c335613de9f05de8d88c0ae02f00cd091ec2cd4c20e3')}catch(error){throw error}
 (function(root){
   'use strict';
   const DATA=root.ROSTERBOT_PAY_RATE_DATA;

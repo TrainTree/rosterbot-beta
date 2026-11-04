@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/06-cloud-config.js','rb-build:bb3b30fc598352ff36ba6aa2ea053392b4f0d68fbd36d79ce42567dff1fe1f6b')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/06-cloud-config.js','rb-build:5fcf271cd94a981796197c0f79d27e234982b10d1ea4c2ec8fe62b9372d6092c')}catch(error){throw error}
 (function(root,factory){
   'use strict';
   const api=factory(root);

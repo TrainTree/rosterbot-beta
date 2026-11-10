@@ -1,4 +1,4 @@
-try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/07-cloud-schema5.js','rb-build:54bafa7317c91a71b326cb8a5aa91734f57e78a37bf20cbe13c644683a63c5d1')}catch(error){throw error}
+try{if(typeof window!=='undefined'&&typeof document!=='undefined')window.__rosterbotRequireBuildComponent('js/07-cloud-schema5.js','rb-build:bf02f16fc20325914888bc057093c0ce3ec4da18cc010220c4f45f74acdbec2e')}catch(error){throw error}
 (function(root,factory){
   'use strict';
   const schema5=root?.RosterBotSchema5||(typeof module!=='undefined'&&module.exports?require('./02-schema5.js'):null);
